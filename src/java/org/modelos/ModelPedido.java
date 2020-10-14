@@ -1,6 +1,12 @@
 package org.modelos;
 
-public class Pedido {
+public class ModelPedido {
+
+
+    private String usuario;
+    private String descripcion_pedido;
+    private String estado;
+    private String colaborador;
     private int idPedido;
     private int idUsuario;
     private int tipo_pedido;
@@ -83,6 +89,36 @@ public class Pedido {
         this.id_colaborador = id_colaborador;
     }
     
-    
+        public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getDescripcion_pedido() {
+        return descripcion_pedido;
+    }
+
+    public void setDescripcion_pedido(String descripcion_pedido) {
+        this.descripcion_pedido = descripcion_pedido;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getColaborador() {
+        return colaborador;
+    }
+
+    public void setColaborador(String colaborador) {
+        this.colaborador = colaborador;
+    }
             
 }

@@ -7,11 +7,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.config.Conexion;
 import org.interfaces.CrudPedido;
-import org.modelos.Pedido;
+import org.modelos.ModelPedido;
 
 public class DaoPedido implements CrudPedido {
 //Se crea un objeto publico del Usuario
-    Pedido pedido = new Pedido();
+    ModelPedido pedido = new ModelPedido();
     //Variable para crear las sentencias SQL
     String strSql =  "";
     //Se crea un obejto de tipo conexión para manejar la persistencia hacia la base de datos
@@ -22,23 +22,23 @@ public class DaoPedido implements CrudPedido {
     boolean respuesta = false;
     @Override
     public List listar() {
-        ArrayList<Pedido> lstPedido = new ArrayList<>();
+        ArrayList<ModelPedido> lstPedido = new ArrayList<>();
          try {            
-            strSql = "SELECT * FROM PEDIDO";
+            strSql = "SELECT P.ID AS ID_PEDIDO, CONCAT (U.NOMBRE,+' '+U.APELLIDO) AS USUARIO, TP.DESCRIPCION AS TIPO_PEDIDO, P.DIR_ORIGEN, P.DIR_DESTINO, P.FCH_INGRESO, P.COMENTARIO, E.DESCRIPCION AS ESTADO, CONCAT(CO.NOMBRE,+' '+CO.APELLIDO) AS COLABORADOR  FROM PEDIDO P INNER JOIN USUARIO U ON P.ID_USUARIO = U.ID INNER JOIN TIPO_PEDIDO TP ON P.TIPO_PEDIDO = TP.ID INNER JOIN ESTADO E ON P.ID_ESTADO = E.ID INNER JOIN COLABORADOR CO ON P.ID_COLABORADOR = CO.ID";
             conexion.open();
             rs = conexion.executeQuery(strSql);                             
             
             while (rs.next()) {
-                Pedido ped = new Pedido();
-                ped.setIdPedido(rs.getInt("ID"));
-                ped.setIdUsuario(rs.getInt("ID_USUARIO"));
-                ped.setTipo_pedido(rs.getInt("TIPO_PEDIDO"));
+                ModelPedido ped = new ModelPedido();
+                ped.setIdPedido(rs.getInt("ID_PEDIDO"));
+                ped.setUsuario(rs.getString("USUARIO"));
+                ped.setDescripcion_pedido(rs.getString("TIPO_PEDIDO"));
                 ped.setDireccion_origen(rs.getString("DIR_ORIGEN"));
                 ped.setDireccion_destino(rs.getString("DIR_DESTINO"));
                 ped.setFecha_ingreso(rs.getString("FCH_INGRESO"));
                 ped.setComentario(rs.getString("COMENTARIO"));
-                ped.setIdEstado(rs.getInt("ID_ESTADO"));
-                ped.setId_colaborador(rs.getInt("ID_COLABORADOR"));
+                ped.setEstado(rs.getString("ESTADO"));
+                ped.setColaborador(rs.getString("COLABORADOR"));
                 lstPedido.add(ped);
             }
             rs.close();
@@ -54,7 +54,7 @@ public class DaoPedido implements CrudPedido {
     }
 
     @Override
-    public boolean insertar(Pedido  pedido) {
+    public boolean insertar(ModelPedido  pedido) {
         
         //String strSql3 =  "UPDATE COLABORADOR SET COLABORADOR='FALSE'";
         strSql = "INSERT INTO PEDIDO (ID_USUARIO, TIPO_PEDIDO, DIR_ORIGEN, DIR_DESTINO, FCH_INGRESO, COMENTARIO, ID_ESTADO) "
@@ -84,7 +84,7 @@ public class DaoPedido implements CrudPedido {
     }
 
     @Override
-    public boolean modificar(Pedido  pedido) {
+    public boolean modificar(ModelPedido  pedido) {
      //Se prepara la sentencia SQL a ejecutar en la BD
         strSql = "UPDATE PEDIDO SET ID_ESTADO = " + pedido.getIdEstado()+ " WHERE ID = " + pedido.getIdPedido();
         try {

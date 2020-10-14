@@ -10,14 +10,14 @@ import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import org.dao.DaoPedido;
-import org.modelos.Pedido;
+import org.modelos.ModelPedido;
 @WebService(serviceName = "ServicioPedidos")
 public class ServicioPedidos {
 
     @WebMethod(operationName = "ObtenerPedidos")
-    public List<Pedido> getUsuarios() {        
+    public List<ModelPedido> getUsuarios() {        
         DaoPedido daoPedido = new DaoPedido();
-        List<Pedido> lstPedido = daoPedido.listar();
+        List<ModelPedido> lstPedido = daoPedido.listar();
         return lstPedido;   
     }
     @WebMethod(operationName = "insertarPedido")
@@ -32,7 +32,7 @@ public class ServicioPedidos {
         SimpleDateFormat fecha = new SimpleDateFormat("yyyy/MM/dd");
         String fechaActual = fecha.format(new Date());
         
-        Pedido pedido = new Pedido();
+        ModelPedido pedido = new ModelPedido();
         pedido.setIdUsuario(idUsuario);
         pedido.setTipo_pedido(tipoPedido);
         pedido.setDireccion_origen(direccionOrigen);
@@ -47,7 +47,7 @@ public class ServicioPedidos {
     }
     public boolean actualizarPedido(@WebParam(name = "IdPedido") int IdPedido,
             @WebParam(name = "IdEstado") int IdEstado){       
-        Pedido pedido = new Pedido();
+        ModelPedido pedido = new ModelPedido();
         pedido.setIdPedido(IdPedido);
         pedido.setIdEstado(IdEstado);
 

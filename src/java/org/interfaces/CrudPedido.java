@@ -1,9 +1,9 @@
 package org.interfaces;
 import java.util.List;
-import org.modelos.Pedido;
+import org.modelos.ModelPedido;
 public interface CrudPedido {
     public List listar();
-    public boolean insertar(Pedido pedido);
-    public boolean modificar(Pedido pedido);
+    public boolean insertar(ModelPedido pedido);
+    public boolean modificar(ModelPedido pedido);
     
 }
