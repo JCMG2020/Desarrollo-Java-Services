@@ -33,7 +33,7 @@ public class ServiciosUsuario {
                               @WebParam(name = "CONTRASENA") String contrasena,
                               @WebParam(name = "TELEFONO") int telefono,
                               @WebParam(name = "TIPO_USUARIO") int tipo_usuario,
-                              @WebParam(name = "DPI") int dpi,
+                              @WebParam(name = "DPI") String dpi,
                               @WebParam(name = "ESTADO") boolean estado) {
         //Se crea el objeto
         ModelUsuario usuario = new ModelUsuario();
@@ -60,7 +60,7 @@ public class ServiciosUsuario {
                               @WebParam(name = "CONTRASENA") String contrasena,
                               @WebParam(name = "TELEFONO") int telefono,
                               @WebParam(name = "TIPO_USUARIO") int tipo_usuario,
-                              @WebParam(name = "DPI") float  dpi,
+                              @WebParam(name = "DPI") String  dpi,
                               @WebParam(name = "ESTADO") boolean estado){
        
         

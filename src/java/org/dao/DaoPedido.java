@@ -24,9 +24,22 @@ public class DaoPedido implements CrudPedido {
     public List listar() {
         ArrayList<ModelPedido> lstPedido = new ArrayList<>();
          try {            
-            strSql = "SELECT P.ID AS ID_PEDIDO, CONCAT (U.NOMBRE,+' '+U.APELLIDO) AS USUARIO, TP.DESCRIPCION AS TIPO_PEDIDO, P.DIR_ORIGEN, P.DIR_DESTINO, P.FCH_INGRESO, P.COMENTARIO, E.DESCRIPCION AS ESTADO, CONCAT(CO.NOMBRE,+' '+CO.APELLIDO) AS COLABORADOR  FROM PEDIDO P INNER JOIN USUARIO U ON P.ID_USUARIO = U.ID INNER JOIN TIPO_PEDIDO TP ON P.TIPO_PEDIDO = TP.ID INNER JOIN ESTADO E ON P.ID_ESTADO = E.ID INNER JOIN COLABORADOR CO ON P.ID_COLABORADOR = CO.ID";
+            strSql = "SELECT P.ID AS ID_PEDIDO, "
+                    + "CONCAT (U.NOMBRE,+' '+U.APELLIDO) AS USUARIO, "
+                    + "TP.DESCRIPCION AS TIPO_PEDIDO, "
+                    + "P.DIR_ORIGEN, "
+                    + "P.DIR_DESTINO, "
+                    + "P.FCH_INGRESO, "
+                    + "P.COMENTARIO, "
+                    + "E.DESCRIPCION AS ESTADO, "
+                    + "CONCAT(CO.NOMBRE,+' '+CO.APELLIDO) AS COLABORADOR  "
+                    + "FROM PEDIDO P "
+                    + "INNER JOIN USUARIO U ON P.ID_USUARIO = U.ID "
+                    + "INNER JOIN TIPO_PEDIDO TP ON P.TIPO_PEDIDO = TP.ID "
+                    + "INNER JOIN ESTADO E ON P.ID_ESTADO = E.ID "
+                    + "INNER JOIN COLABORADOR CO ON P.ID_COLABORADOR = CO.ID";
             conexion.open();
-            rs = conexion.executeQuery(strSql);                             
+            rs = conexion.executeQuery(strSql);        
             
             while (rs.next()) {
                 ModelPedido ped = new ModelPedido();

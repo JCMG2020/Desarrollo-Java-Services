@@ -37,7 +37,7 @@ public class DaoUsuario implements CrudUsuario {
                 usu.setContrasena(rs.getString("CONTRASENA"));
                 usu.setTelefono(rs.getInt("TELEFONO"));
                 usu.setTipo_usuario(rs.getInt("TIPO_USUARIO"));
-                usu.setDPI(rs.getLong("DPI"));
+                usu.setDPI(rs.getString("DPI"));
                 usu.setEstado(rs.getBoolean("ESTADO"));
                 lstUsuario.add(usu);
             }
@@ -74,7 +74,7 @@ public class DaoUsuario implements CrudUsuario {
                 usu.setContrasena(rs.getString("CONTRASENA"));
                 usu.setTelefono(rs.getInt("TELEFONO"));
                 usu.setTipo_usuario(rs.getInt("TIPO_USUARIO"));
-                usu.setDPI(rs.getInt("DPI"));
+                usu.setDPI(rs.getString("DPI"));
                 usu.setEstado(rs.getBoolean("ESTADO"));
                 lstUsuario.add(usu);
             }

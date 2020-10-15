@@ -6,8 +6,16 @@ import java.math.BigInteger;
 
 public class ModelUsuario {
    private int idUsuario;
-   private String usuario_alias;
-
+   private String usuario_alias;   
+   private String nombre;
+   private String apellido;
+   private String email;
+   private String contrasena;
+   private int telefono;
+   private int tipo_usuario;
+   private String DPI;
+   private boolean estado;
+   
     public String getUsuario_alias() {
         return usuario_alias;
     }
@@ -15,14 +23,6 @@ public class ModelUsuario {
     public void setUsuario_alias(String usuario_alias) {
         this.usuario_alias = usuario_alias;
     }
-   private String nombre;
-   private String apellido;
-   private String email;
-   private String contrasena;
-   private int telefono;
-   private int tipo_usuario;
-   private float DPI;
-   private boolean estado;
    
     public int getIdUsuario() {
         return idUsuario;
@@ -80,11 +80,11 @@ public class ModelUsuario {
         this.tipo_usuario = tipo_usuario;
     }
 
-    public float getDPI() {
+    public String getDPI() {
         return DPI;
     }
 
-    public void setDPI(float   DPI) {
+    public void setDPI(String   DPI) {
         this.DPI = DPI;
     }
 
