@@ -16,7 +16,6 @@ public class ServiciosUsuario {
         List<ModelUsuario> lstUsuario = daoUsuario.listar();
         return lstUsuario;   
     }
-
    @WebMethod(operationName = "LoginUsuario")
     public List<ModelUsuario> login(@WebParam(name = "email") String email,                              
                          @WebParam(name = "contrasena") String contrasena){
@@ -31,7 +30,7 @@ public class ServiciosUsuario {
                               @WebParam(name = "APELLIDO") String apellido,
                               @WebParam(name = "EMAIL") String email,
                               @WebParam(name = "CONTRASENA") String contrasena,
-                              @WebParam(name = "TELEFONO") int telefono,
+                              @WebParam(name = "TELEFONO") String telefono,
                               @WebParam(name = "TIPO_USUARIO") int tipo_usuario,
                               @WebParam(name = "DPI") String dpi,
                               @WebParam(name = "ESTADO") boolean estado) {
@@ -58,7 +57,7 @@ public class ServiciosUsuario {
                               @WebParam(name = "APELLIDO") String apellido,
                               @WebParam(name = "EMAIL") String email,
                               @WebParam(name = "CONTRASENA") String contrasena,
-                              @WebParam(name = "TELEFONO") int telefono,
+                              @WebParam(name = "TELEFONO") String telefono,
                               @WebParam(name = "TIPO_USUARIO") int tipo_usuario,
                               @WebParam(name = "DPI") String  dpi,
                               @WebParam(name = "ESTADO") boolean estado){

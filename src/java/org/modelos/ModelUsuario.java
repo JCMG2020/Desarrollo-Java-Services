@@ -11,8 +11,9 @@ public class ModelUsuario {
    private String apellido;
    private String email;
    private String contrasena;
-   private int telefono;
+   private String telefono;
    private int tipo_usuario;
+   private String tipo_usuario_nombre;
    private String DPI;
    private boolean estado;
    
@@ -64,11 +65,11 @@ public class ModelUsuario {
         this.contrasena = contrasena;
     }
 
-    public long getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
@@ -96,4 +97,11 @@ public class ModelUsuario {
         this.estado = estado;
     }
    
+    public String getTipo_usuario_nombre() {
+        return tipo_usuario_nombre;
+    }
+
+    public void setTipo_usuario_nombre(String tipo_usuario_nombre) {
+        this.tipo_usuario_nombre = tipo_usuario_nombre;
+    }
 }

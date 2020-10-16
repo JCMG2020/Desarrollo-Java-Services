@@ -67,11 +67,11 @@ public class ModelColaboradores {
         this.domicilio = domicilio;
     }
 
-    public long getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(long telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
@@ -83,12 +83,19 @@ public class ModelColaboradores {
         this.placa = placa;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+        public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
     private int idColaborador;
     private String nombre;
@@ -99,7 +106,7 @@ public class ModelColaboradores {
     private String fechaNacimiento;
     private String fechaContratacion;
     private String domicilio;
-    private long telefono;
+    private String telefono;
     private String placa;
     private boolean estado;
     

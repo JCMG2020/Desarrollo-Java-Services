@@ -23,7 +23,7 @@ public class DaoUsuario implements CrudUsuario {
     public List listar() {
         ArrayList<ModelUsuario> lstUsuario = new ArrayList<>();
          try {            
-            strSql = "SELECT * FROM USUARIO";
+            strSql = "SELECT U.ID, U.USUARIO_ALIAS, U.NOMBRE, U.APELLIDO, U.EMAIL, U.CONTRASENA, U.TELEFONO, TP.DESCRIPCION AS TIPO_USUARIO_NOMBRE, U.DPI, U.ESTADO FROM USUARIO U INNER JOIN TIPO_USUARIO TP ON U.TIPO_USUARIO = TP.ID";
             conexion.open();
             rs = conexion.executeQuery(strSql);                             
             
@@ -35,8 +35,8 @@ public class DaoUsuario implements CrudUsuario {
                 usu.setApellido(rs.getString("APELLIDO"));
                 usu.setEmail(rs.getString("EMAIL"));
                 usu.setContrasena(rs.getString("CONTRASENA"));
-                usu.setTelefono(rs.getInt("TELEFONO"));
-                usu.setTipo_usuario(rs.getInt("TIPO_USUARIO"));
+                usu.setTelefono(rs.getString("TELEFONO"));
+                usu.setTipo_usuario_nombre(rs.getString("TIPO_USUARIO_NOMBRE"));
                 usu.setDPI(rs.getString("DPI"));
                 usu.setEstado(rs.getBoolean("ESTADO"));
                 lstUsuario.add(usu);
@@ -72,7 +72,7 @@ public class DaoUsuario implements CrudUsuario {
                 usu.setApellido(rs.getString("APELLIDO"));
                 usu.setEmail(rs.getString("EMAIL"));
                 usu.setContrasena(rs.getString("CONTRASENA"));
-                usu.setTelefono(rs.getInt("TELEFONO"));
+                usu.setTelefono(rs.getString("TELEFONO"));
                 usu.setTipo_usuario(rs.getInt("TIPO_USUARIO"));
                 usu.setDPI(rs.getString("DPI"));
                 usu.setEstado(rs.getBoolean("ESTADO"));

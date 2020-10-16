@@ -22,7 +22,7 @@ public class DaoColaborador implements CrudColaborador{
     public List listar() {
         ArrayList<ModelColaboradores> lstColaborador = new ArrayList<>();
          try {            
-            strSql = "SELECT * FROM COLABORADOR ";
+            strSql = "SELECT C.ID, C.NOMBRE,C.APELLIDO, C.DPI, TC.DESCRIPCION, C.FCH_NAC, C.FCH_CONTRAT, C.DOMICILIO, C.TELEFONO, C.PLACA, C.ESTADO FROM COLABORADOR C INNER JOIN TIPO_CARGO TC ON C.ID_CARGO = TC.ID";
             conexion.open();
             rs = conexion.executeQuery(strSql);                             
             
@@ -32,11 +32,12 @@ public class DaoColaborador implements CrudColaborador{
                 usu.setNombre(rs.getString("NOMBRE"));
                 usu.setApellido(rs.getString("APELLIDO"));
                 usu.setDPI(rs.getString("DPI"));
-                usu.setIdCargo(rs.getInt("ID_Cargo"));             
+                usu.setCargo(rs.getString("DESCRIPCION"));             
                 usu.setFechaNacimiento(rs.getString("FCH_NAC"));
                 usu.setFechaContratacion(rs.getString("FCH_CONTRAT"));
-                usu.setDomicilio(rs.getString("DOMICILiO"));
-                usu.setTelefono(rs.getLong("TELEFONO"));
+                usu.setDomicilio(rs.getString("DOMICILIO"));
+                usu.setTelefono(rs.getString("TELEFONO"));
+                usu.setPlaca(rs.getString("PLACA"));
                 usu.setEstado(rs.getBoolean("ESTADO"));
                 lstColaborador.add(usu);
             }
@@ -54,17 +55,88 @@ public class DaoColaborador implements CrudColaborador{
 
     @Override
     public boolean insertar(ModelColaboradores colaborador) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       //Se prepara la sentencia SQL a ejecutar en la BD
+        strSql = "INSERT INTO COLABORADOR (NOMBRE, APELLIDO, DPI, ID_CARGO, FCH_NAC, FCH_CONTRAT, DOMICILIO, TELEFONO, PLACA,  ESTADO)"
+                + "VALUES ("
+                +" '" + colaborador.getNombre()+ "', "
+                +" '"+ colaborador.getApellido()+ "', "
+                +" '"+ colaborador.getDPI()+ "', "
+                +"  "+ colaborador.getIdCargo()+", "
+                +" '" + colaborador.getFechaNacimiento()+ "', "
+                +" '" + colaborador.getFechaContratacion()+"', "
+                +" '"+ colaborador.getDomicilio()+"', "
+                +" '"+ colaborador.getTelefono()+"', "
+                +" '"+ colaborador.getPlaca()+"', "
+                +" '"+ colaborador.getEstado()+ "')";       
+        try {
+            //se abre una conexión hacia la BD
+            conexion.open();
+            //Se ejecuta la instrucción y retorna si la ejecución fue satisfactoria
+            respuesta = conexion.executeSql(strSql);
+            //Se cierra la conexión hacia la BD
+            conexion.close();
+             
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DaoUsuario.class.getName()).log(Level.SEVERE, null, ex);     
+            return false;
+        } catch(Exception ex){
+            Logger.getLogger(DaoUsuario.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+        return respuesta; 
+    }
+
+    
+    @Override
+    public boolean eliminar(ModelColaboradores colaborador) {
+        strSql = "DELETE COLABORADOR WHERE ID = " + colaborador.getIdColaborador();
+        
+        try {
+            //se abre una conexión hacia la BD
+            conexion.open();
+            //Se ejecuta la instrucción y retorna si la ejecución fue satisfactoria
+            respuesta = conexion.executeSql(strSql);
+            //Se cierra la conexión hacia la BD
+            conexion.close();
+             
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DaoColaborador.class.getName()).log(Level.SEVERE, null, ex);     
+            return false;
+        } catch(Exception ex){
+            Logger.getLogger(DaoColaborador.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+        return respuesta;
     }
 
     @Override
     public boolean modificar(ModelColaboradores colaborador) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+               //Se prepara la sentencia SQL a ejecutar en la BD
+        strSql = "UPDATE COLABORADOR SET "+
+                 "NOMBRE = '" + colaborador.getNombre()+ "', " + 
+                 "APELLIDO = '" + colaborador.getApellido() + "', " + 
+                 "DPI = '" + colaborador.getDPI() + "', " +
+                 "ID_CARGO = " + colaborador.getIdCargo()+ ", " +
+                 "FCH_NAC = '" + colaborador.getFechaNacimiento() +"', "+
+                 "FCH_CONTRAT = '" + colaborador.getFechaContratacion() +"', "+
+                 "DOMICILIO = '" + colaborador.getDomicilio() +"', "+
+                 "TELEFONO = '" + colaborador.getTelefono() +"', "+
+                 "PLACA = '" + colaborador.getPlaca() +"', "+
+                 "ESTADO = '" + colaborador.getEstado() +"' WHERE ID =" + colaborador.getIdColaborador();
+        try {
+            //se abre una conexión hacia la BD
+            conexion.open();
+            //Se ejecuta la instrucción y retorna si la ejecución fue satisfactoria
+            respuesta = conexion.executeSql(strSql);
+            //Se cierra la conexión hacia la BD
+            conexion.close();
+             
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DaoColaborador.class.getName()).log(Level.SEVERE, null, ex);     
+            return false;
+        } catch(Exception ex){
+            Logger.getLogger(DaoColaborador.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+        return respuesta;
     }
 
-    @Override
-    public boolean eliminar(ModelColaboradores colaborador) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 }
