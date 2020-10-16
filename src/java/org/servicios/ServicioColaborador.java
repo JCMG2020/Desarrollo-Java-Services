@@ -87,4 +87,10 @@ public class ServicioColaborador {
         return daoColaborador.eliminar(colaborador);
         
     }
+     @WebMethod(operationName = "ObtenerCargos")
+    public List<ModelColaboradores> ObtenerCargos() {        
+        DaoColaborador daoColaborador = new DaoColaborador();
+        List<ModelColaboradores> lstColaborador = daoColaborador.listarCargos();
+        return lstColaborador;   
+    }
 }

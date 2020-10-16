@@ -22,7 +22,7 @@ public class DaoColaborador implements CrudColaborador{
     public List listar() {
         ArrayList<ModelColaboradores> lstColaborador = new ArrayList<>();
          try {            
-            strSql = "SELECT C.ID, C.NOMBRE,C.APELLIDO, C.DPI, TC.DESCRIPCION, C.FCH_NAC, C.FCH_CONTRAT, C.DOMICILIO, C.TELEFONO, C.PLACA, C.ESTADO FROM COLABORADOR C INNER JOIN TIPO_CARGO TC ON C.ID_CARGO = TC.ID";
+            strSql = "SELECT C.ID, C.NOMBRE,C.APELLIDO, C.ID_CARGO, C.DPI, TC.DESCRIPCION, C.FCH_NAC, C.FCH_CONTRAT, C.DOMICILIO, C.TELEFONO, C.PLACA, C.ESTADO FROM COLABORADOR C INNER JOIN TIPO_CARGO TC ON C.ID_CARGO = TC.ID";
             conexion.open();
             rs = conexion.executeQuery(strSql);                             
             
@@ -32,7 +32,8 @@ public class DaoColaborador implements CrudColaborador{
                 usu.setNombre(rs.getString("NOMBRE"));
                 usu.setApellido(rs.getString("APELLIDO"));
                 usu.setDPI(rs.getString("DPI"));
-                usu.setCargo(rs.getString("DESCRIPCION"));             
+                usu.setCargo(rs.getString("DESCRIPCION"));  
+                usu.setIdCargo(rs.getInt("ID_CARGO")); 
                 usu.setFechaNacimiento(rs.getString("FCH_NAC"));
                 usu.setFechaContratacion(rs.getString("FCH_CONTRAT"));
                 usu.setDomicilio(rs.getString("DOMICILIO"));
@@ -138,5 +139,29 @@ public class DaoColaborador implements CrudColaborador{
         return respuesta;
     }
 
-    
+    @Override
+    public List listarCargos() {
+         ArrayList<ModelColaboradores> lstColaborador = new ArrayList<>();
+        try {            
+            strSql = "SELECT ID, DESCRIPCION FROM TIPO_CARGO";
+            conexion.open();
+            rs = conexion.executeQuery(strSql);                             
+            
+            while (rs.next()) {
+                ModelColaboradores usu = new ModelColaboradores();
+                usu.setCargo(rs.getString("DESCRIPCION"));  
+                usu.setIdCargo(rs.getInt("ID")); 
+                lstColaborador.add(usu);
+            }
+            rs.close();
+            conexion.close();
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DaoColaborador.class.getName()).log(Level.SEVERE, null, ex);            
+        } catch(Exception ex){
+            Logger.getLogger(DaoColaborador.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+        
+         return lstColaborador;
+    }    
 }

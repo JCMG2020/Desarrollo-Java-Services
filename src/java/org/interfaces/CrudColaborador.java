@@ -7,4 +7,5 @@ public interface CrudColaborador {
     public boolean insertar(ModelColaboradores colaborador);
     public boolean modificar(ModelColaboradores colaborador);
     public boolean eliminar(ModelColaboradores colaborador);
+    public List listarCargos();
 }
