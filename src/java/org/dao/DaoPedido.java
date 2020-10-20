@@ -117,5 +117,31 @@ public class DaoPedido implements CrudPedido {
         return respuesta;
     }
 
+    @Override
+    public List TipoPedido() {
+    ArrayList<ModelPedido> lstPedido = new ArrayList<>();
+        try {            
+            strSql = "SELECT ID, DESCRIPCION FROM TIPO_PEDIDO";
+            conexion.open();
+            rs = conexion.executeQuery(strSql);                             
+            
+            while (rs.next()) {
+                ModelPedido ped = new ModelPedido();
+                ped.setDescripcion_pedido(rs.getString("DESCRIPCION"));  
+                ped.setIdPedido(rs.getInt("ID")); 
+                lstPedido.add(ped);
+            }
+            rs.close();
+            conexion.close();
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DaoPedido.class.getName()).log(Level.SEVERE, null, ex);            
+        } catch(Exception ex){
+            Logger.getLogger(DaoPedido.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+        
+         return lstPedido;    
+    }
+
     
 }

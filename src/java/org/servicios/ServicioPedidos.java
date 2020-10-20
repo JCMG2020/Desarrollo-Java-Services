@@ -20,6 +20,12 @@ public class ServicioPedidos {
         List<ModelPedido> lstPedido = daoPedido.listar();
         return lstPedido;   
     }
+    @WebMethod(operationName = "ObtenerTipoPedido")
+    public List<ModelPedido> getTipoPedido() {        
+        DaoPedido daoPedido = new DaoPedido();
+        List<ModelPedido> lstPedido = daoPedido.TipoPedido();
+        return lstPedido;   
+    }
     @WebMethod(operationName = "insertarPedido")
     public boolean insertarPedido(                              
                                 @WebParam(name = "ID_USUARIO") int idUsuario,

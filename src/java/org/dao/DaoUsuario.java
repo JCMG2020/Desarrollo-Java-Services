@@ -23,7 +23,7 @@ public class DaoUsuario implements CrudUsuario {
     public List listar() {
         ArrayList<ModelUsuario> lstUsuario = new ArrayList<>();
          try {            
-            strSql = "SELECT U.ID, U.USUARIO_ALIAS, U.NOMBRE, U.APELLIDO, U.EMAIL, U.CONTRASENA, U.TELEFONO, TP.DESCRIPCION AS TIPO_USUARIO_NOMBRE, U.DPI, U.ESTADO FROM USUARIO U INNER JOIN TIPO_USUARIO TP ON U.TIPO_USUARIO = TP.ID";
+            strSql = "SELECT U.ID, U.USUARIO_ALIAS, U.NOMBRE, U.APELLIDO, U.EMAIL, U.CONTRASENA, U.TELEFONO, U.TIPO_USUARIO, TP.DESCRIPCION AS TIPO_USUARIO_NOMBRE, U.DPI, U.ESTADO FROM USUARIO U INNER JOIN TIPO_USUARIO TP ON U.TIPO_USUARIO = TP.ID";
             conexion.open();
             rs = conexion.executeQuery(strSql);                             
             
@@ -36,6 +36,7 @@ public class DaoUsuario implements CrudUsuario {
                 usu.setEmail(rs.getString("EMAIL"));
                 usu.setContrasena(rs.getString("CONTRASENA"));
                 usu.setTelefono(rs.getString("TELEFONO"));
+                usu.setTipo_usuario(rs.getInt("TIPO_USUARIO"));
                 usu.setTipo_usuario_nombre(rs.getString("TIPO_USUARIO_NOMBRE"));
                 usu.setDPI(rs.getString("DPI"));
                 usu.setEstado(rs.getBoolean("ESTADO"));
@@ -169,6 +170,32 @@ public class DaoUsuario implements CrudUsuario {
             Logger.getLogger(DaoUsuario.class.getName()).log(Level.SEVERE, null, ex);            
         }
         return respuesta;
+    }
+
+    @Override
+    public List listarTipoUsuario() {
+        ArrayList<ModelUsuario> lstUsuario = new ArrayList<>();
+        try {            
+            strSql = "SELECT ID, DESCRIPCION FROM TIPO_USUARIO";
+            conexion.open();
+            rs = conexion.executeQuery(strSql);                             
+            
+            while (rs.next()) {
+                ModelUsuario usu = new ModelUsuario();
+                usu.setTipo_usuario_nombre(rs.getString("DESCRIPCION"));  
+                usu.setTipo_usuario(rs.getInt("ID")); 
+                lstUsuario.add(usu);
+            }
+            rs.close();
+            conexion.close();
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DaoUsuario.class.getName()).log(Level.SEVERE, null, ex);            
+        } catch(Exception ex){
+            Logger.getLogger(DaoUsuario.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+        
+         return lstUsuario;
     }
     
 }

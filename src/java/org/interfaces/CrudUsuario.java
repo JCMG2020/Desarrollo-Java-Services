@@ -8,4 +8,5 @@ public interface CrudUsuario {
     public boolean insertar(ModelUsuario usuario);
     public boolean modificar(ModelUsuario usuario);
     public boolean eliminar(ModelUsuario usuario);
+    public List listarTipoUsuario();
 }

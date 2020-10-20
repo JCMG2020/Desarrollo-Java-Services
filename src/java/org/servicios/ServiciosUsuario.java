@@ -90,4 +90,10 @@ public class ServiciosUsuario {
         return daoUsuario.eliminar(usuario);
         
     }
+     @WebMethod(operationName = "ObtenerTipoUsuario")
+    public List<ModelUsuario> ObtenerTipoUsuario() {        
+        DaoUsuario daoUsuario = new DaoUsuario();
+        List<ModelUsuario> lstUsuario = daoUsuario.listarTipoUsuario();
+        return lstUsuario;   
+    }
 }
