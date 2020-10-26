@@ -67,6 +67,88 @@ public class DaoPedido implements CrudPedido {
     }
 
     @Override
+    public List listarUltimoPedido(int usuario) {
+        ArrayList<ModelPedido> lstPedido = new ArrayList<>();
+         try {            
+            strSql = "SELECT P.ID AS ID_PEDIDO, "
+                    + "CONCAT (U.NOMBRE,+' '+U.APELLIDO) AS USUARIO, "
+                    + "TP.DESCRIPCION AS TIPO_PEDIDO, "
+                    + "P.DIR_ORIGEN, "
+                    + "P.DIR_DESTINO, "
+                    + "P.FCH_INGRESO, "
+                    + "P.COMENTARIO, "
+                    + "E.DESCRIPCION AS ESTADO, "
+                    + "CONCAT(CO.NOMBRE,+' '+CO.APELLIDO) AS COLABORADOR  "
+                    + "FROM PEDIDO P "
+                    + "INNER JOIN USUARIO U ON P.ID_USUARIO = U.ID "
+                    + "INNER JOIN TIPO_PEDIDO TP ON P.TIPO_PEDIDO = TP.ID "
+                    + "INNER JOIN ESTADO E ON P.ID_ESTADO = E.ID "
+                    + "INNER JOIN COLABORADOR CO ON P.ID_COLABORADOR = CO.ID where P.ID =(select top 1 id from pedido order by ID desc) and U.ID ="+usuario;
+            conexion.open();
+            rs = conexion.executeQuery(strSql);        
+            
+            while (rs.next()) {
+                ModelPedido ped = new ModelPedido();
+                ped.setIdPedido(rs.getInt("ID_PEDIDO"));
+                ped.setUsuario(rs.getString("USUARIO"));
+                ped.setDescripcion_pedido(rs.getString("TIPO_PEDIDO"));
+                ped.setDireccion_origen(rs.getString("DIR_ORIGEN"));
+                ped.setDireccion_destino(rs.getString("DIR_DESTINO"));
+                ped.setFecha_ingreso(rs.getString("FCH_INGRESO"));
+                ped.setComentario(rs.getString("COMENTARIO"));
+                ped.setEstado(rs.getString("ESTADO"));
+                ped.setColaborador(rs.getString("COLABORADOR"));
+                lstPedido.add(ped);
+            }
+            rs.close();
+            conexion.close();
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DaoPedido.class.getName()).log(Level.SEVERE, null, ex);            
+        } catch(Exception ex){
+            Logger.getLogger(DaoPedido.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+        
+         return lstPedido;
+    }
+
+    
+    
+    @Override
+    public List listarPedidosPorUsuario(int usuario) {
+        ArrayList<ModelPedido> lstPedido = new ArrayList<>();
+         try {            
+            strSql = "SELECT * FROM PEDIDO WHERE ID_USUARIO  ="+usuario;
+            conexion.open();
+            rs = conexion.executeQuery(strSql);        
+            
+            while (rs.next()) {
+                ModelPedido ped = new ModelPedido();
+                ped.setIdPedido(rs.getInt("ID"));
+                ped.setUsuario(rs.getString("ID_USUARIO"));
+                ped.setDescripcion_pedido(rs.getString("TIPO_PEDIDO"));
+                ped.setDireccion_origen(rs.getString("DIR_ORIGEN"));
+                ped.setDireccion_destino(rs.getString("DIR_DESTINO"));
+                ped.setFecha_ingreso(rs.getString("FCH_INGRESO"));
+                ped.setComentario(rs.getString("COMENTARIO"));
+                ped.setEstado(rs.getString("ID_ESTADO"));
+                ped.setColaborador(rs.getString("ID_COLABORADOR"));
+                lstPedido.add(ped);
+            }
+            rs.close();
+            conexion.close();
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DaoPedido.class.getName()).log(Level.SEVERE, null, ex);            
+        } catch(Exception ex){
+            Logger.getLogger(DaoPedido.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+        
+         return lstPedido;
+    }
+
+    
+    @Override
     public boolean insertar(ModelPedido  pedido) {
         
         //String strSql3 =  "UPDATE COLABORADOR SET COLABORADOR='FALSE'";

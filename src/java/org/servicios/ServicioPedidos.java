@@ -20,6 +20,21 @@ public class ServicioPedidos {
         List<ModelPedido> lstPedido = daoPedido.listar();
         return lstPedido;   
     }
+    
+    @WebMethod(operationName = "ObtenerUltimoPedido")
+    public List<ModelPedido> getUltimoPedido(@WebParam(name = "usuario")int usu) {        
+        DaoPedido daoPedido = new DaoPedido();
+        List<ModelPedido> lstPedido = daoPedido.listarUltimoPedido(usu);
+        return lstPedido;   
+    }
+    
+    @WebMethod(operationName = "ObtenerPedidosPorUsuario")
+    public List<ModelPedido> getPedidoPorUsuario(@WebParam(name = "usuario")int usu) {        
+        DaoPedido daoPedido = new DaoPedido();
+        List<ModelPedido> lstPedido = daoPedido.listarPedidosPorUsuario(usu);
+        return lstPedido;   
+    }
+    
     @WebMethod(operationName = "ObtenerTipoPedido")
     public List<ModelPedido> getTipoPedido() {        
         DaoPedido daoPedido = new DaoPedido();
