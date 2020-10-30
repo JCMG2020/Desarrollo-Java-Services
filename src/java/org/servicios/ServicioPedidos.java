@@ -66,6 +66,7 @@ public class ServicioPedidos {
         return daoPedido.insertar(pedido);
         
     }
+    @WebMethod(operationName = "actualizarPedido")
     public boolean actualizarPedido(@WebParam(name = "IdPedido") int IdPedido,
             @WebParam(name = "IdEstado") int IdEstado){       
         ModelPedido pedido = new ModelPedido();

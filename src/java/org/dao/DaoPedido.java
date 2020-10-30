@@ -70,20 +70,24 @@ public class DaoPedido implements CrudPedido {
     public List listarUltimoPedido(int usuario) {
         ArrayList<ModelPedido> lstPedido = new ArrayList<>();
          try {            
-            strSql = "SELECT P.ID AS ID_PEDIDO, "
-                    + "CONCAT (U.NOMBRE,+' '+U.APELLIDO) AS USUARIO, "
-                    + "TP.DESCRIPCION AS TIPO_PEDIDO, "
-                    + "P.DIR_ORIGEN, "
-                    + "P.DIR_DESTINO, "
-                    + "P.FCH_INGRESO, "
-                    + "P.COMENTARIO, "
-                    + "E.DESCRIPCION AS ESTADO, "
-                    + "CONCAT(CO.NOMBRE,+' '+CO.APELLIDO) AS COLABORADOR  "
-                    + "FROM PEDIDO P "
-                    + "INNER JOIN USUARIO U ON P.ID_USUARIO = U.ID "
-                    + "INNER JOIN TIPO_PEDIDO TP ON P.TIPO_PEDIDO = TP.ID "
-                    + "INNER JOIN ESTADO E ON P.ID_ESTADO = E.ID "
-                    + "INNER JOIN COLABORADOR CO ON P.ID_COLABORADOR = CO.ID where P.ID =(select top 1 id from pedido order by ID desc) and U.ID ="+usuario;
+            strSql = "SELECT TOP 1\n" +
+                    "    P.ID AS ID_PEDIDO, \n" +
+                    "    CONCAT (U.NOMBRE,+' '+U.APELLIDO) AS USUARIO, \n" +
+                    "    TP.DESCRIPCION AS TIPO_PEDIDO, \n" +
+                    "    P.DIR_ORIGEN, \n" +
+                    "    P.DIR_DESTINO, \n" +
+                    "    P.FCH_INGRESO, \n" +
+                    "    P.COMENTARIO, \n" +
+                    "    E.DESCRIPCION AS ESTADO, \n" +
+                    "    CONCAT(CO.NOMBRE,+' '+CO.APELLIDO) AS COLABORADOR  \n" +
+                    "    FROM PEDIDO P \n" +
+                    "    INNER JOIN USUARIO U ON P.ID_USUARIO = U.ID \n" +
+                    "    INNER JOIN TIPO_PEDIDO TP ON P.TIPO_PEDIDO = TP.ID \n" +
+                    "    INNER JOIN ESTADO E ON P.ID_ESTADO = E.ID  " +
+                    "  INNER JOIN COLABORADOR CO ON P.ID_COLABORADOR = CO.ID \n" +
+                    "	WHERE U.ID = " + usuario + "\n" +
+                    "	AND E.ID = 1 " +
+                    " ORDER BY FCH_INGRESO DESC ";
             conexion.open();
             rs = conexion.executeQuery(strSql);        
             
@@ -158,7 +162,7 @@ public class DaoPedido implements CrudPedido {
                 + ",  " + pedido.getTipo_pedido()+ " "
                 + ", '"+ pedido.getDireccion_origen()+ "'"
                 + ", '"+ pedido.getDireccion_destino()+ "'"
-                + ", '" + pedido.getFecha_ingreso()+ "'"
+                + ", GETDATE()"
                 + ", '" + pedido.getComentario() +"'"
                 + ",  1)";       
         try {
